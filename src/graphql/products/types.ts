@@ -1,5 +1,3 @@
-import { gql } from 'apollo-server-express'
-
 export const types = `
   type Product {
     id: String!
