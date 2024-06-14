@@ -21,21 +21,25 @@ const getProducts = async () => {
   return data
 }
 
-const addProduct = async (name: string) => {
-    const db = await connection()
-    const insertSql = 'INSERT INTO products (id, name) VALUES (?, ?)'
-    const id = getId()
-    const insertValues = [id, name]
-    
-    try {
-      await db.query(insertSql, insertValues)
+const addProduct = async (name: string, price: number, temperature: string, description: string, id_category: number) => {
+  const db = await connection()
+  const insertSql = 'INSERT INTO products (id, name, price, temperature, description, id_category) VALUES (?, ?, ?, ?, ?, ?)'
+  const id = getId()
+  const insertValues = [id, name, price, temperature, description, id_category]
+  
+  try {
+    await db.query(insertSql, insertValues)
 
-      const selectSql = 'SELECT * FROM products WHERE id = ?'
-      const [data]: any = await db.query(selectSql, [id])
-      return data[0] 
-    } catch (error) {
-      throw error
-    } 
+    const selectSql = 'SELECT * FROM products WHERE id = ?'
+    const [data]: any = await db.query(selectSql, [id])
+    return data[0] 
+  } catch (error) {
+    throw error
+  } 
+}
+
+const updateProduct = async (name: string, price: number, temperature: string, description: string, id_category: number) => {
+
 }
 
 export {

@@ -1,8 +1,8 @@
+import { v4 as uuidv4 } from 'uuid'
+
 const getId = () => {
-  const id = Math.round(Date.now() * 3.141516 + 27405)
-  const result = id.toString() 
-  console.log(result)
-  return result
+  const id = uuidv4()
+  return id
 }
 
 export default getId
