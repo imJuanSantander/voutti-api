@@ -17,8 +17,13 @@ interface Products extends Product {
 const getProducts = async () => { 
   const db = await connection()
   const sql = 'SELECT * FROM products'
-  const [data] = await db.query(sql)
-  return data
+
+  try {
+    const [data] = await db.query(sql)
+    return data
+  } catch (error) {
+    throw error
+  }
 }
 
 const addProduct = async (name: string, price: number, temperature: string, description: string, id_category: number) => {
@@ -30,19 +35,25 @@ const addProduct = async (name: string, price: number, temperature: string, desc
   try {
     await db.query(insertSql, insertValues)
 
-    const selectSql = 'SELECT * FROM products WHERE id = ?'
-    const [data]: any = await db.query(selectSql, [id])
-    return data[0] 
   } catch (error) {
     throw error
   } 
 }
 
-const updateProduct = async (name: string, price: number, temperature: string, description: string, id_category: number) => {
+const updateProduct = async (id: string, name: string, price: number, temperature: string, description: string, id_category: number) => {
+  const db = await connection()
+  const sql = 'UPDATE products SET name = ?, price = ?, temperature = ?, description = ?, id_category = ? WHERE id = ?'
+  const values = [name, price, temperature, description, id_category, id]
 
+  try {
+    await db.query(sql, values)
+  } catch (error) {
+    throw error
+  }
 }
 
 export {
   getProducts,
-  addProduct
+  addProduct,
+  updateProduct
 }
