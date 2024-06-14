@@ -7,7 +7,7 @@ interface Product {
   temperature: string
   description: string
   id_category: number
-  archived: boolean
+  archived: number
 }
 
 const queries = {
@@ -17,7 +17,7 @@ const queries = {
 
 const mutations = {
   addProduct: async (root: any, { name, price, temperature, description, id_category }: Product) => await addProduct(name, price, temperature, description, id_category),
-  updateProduct: async (root: any, { id, name, price, temperature, description, id_category}: Product) => await updateProduct(id, name, price, temperature, description, id_category),
+  updateProduct: async (root: any, { id, name, price, temperature, description, id_category, archived}: Product) => await updateProduct(id, name, price, temperature, description, id_category, archived),
   deleteProduct: async (root: any, { id }: Product) => deleteProduct(id),
   archiveProduct: async (root: any, { id }: Product) => archiveProduct(id) 
 }

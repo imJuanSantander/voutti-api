@@ -2,19 +2,6 @@ import { connect } from "http2"
 import connection from "../config/db"
 import getId from "../helpers/getId"
 
-interface Product {
-  id: string,
-  name: string,
-  price: number,
-  temperature: string,
-  description: string,
-  id_category: string
-}
-
-interface Products extends Product {
-  data: Product[]
-}
-
 const getProducts = async () => { 
   const db = await connection()
   const sql = 'SELECT * FROM products'
@@ -33,7 +20,8 @@ const getProduct = async (id: string) => {
   const values = [id]
 
   try {
-    await db.query(sql, values)
+    const [data]: any = await db.query(sql, values) 
+    return data[0]
   } catch (error) {
     throw error
   }
@@ -53,10 +41,10 @@ const addProduct = async (name: string, price: number, temperature: string, desc
   } 
 }
 
-const updateProduct = async (id: string, name: string, price: number, temperature: string, description: string, id_category: number) => {
+const updateProduct = async (id: string, name: string, price: number, temperature: string, description: string, id_category: number, archived: number) => {
   const db = await connection()
-  const sql = 'UPDATE products SET name = ?, price = ?, temperature = ?, description = ?, id_category = ? WHERE id = ?'
-  const values = [name, price, temperature, description, id_category, id]
+  const sql = 'UPDATE products SET name = ?, price = ?, temperature = ?, description = ?, id_category = ?, archived = ? WHERE id = ?'
+  const values = [name, price, temperature, description, id_category, archived, id]
 
   try {
     await db.query(sql, values)
