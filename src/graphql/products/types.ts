@@ -6,5 +6,6 @@ export const types = `
     temperature: String!
     description: String!
     id_category: Int!
+    archived: Boolean!
   }
 `;
