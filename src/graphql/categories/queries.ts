@@ -1,4 +1,4 @@
 export const queries = `
-  getCategories: [Category!]
+  getCategories: [Category]
   getCategory(id: String!): Category!
 `

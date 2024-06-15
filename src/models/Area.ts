@@ -28,9 +28,10 @@ const getArea = async (id: string) => {
 
 const addArea = async (name: string) => {
   const db = await connection()
+  const sql = 'INSERT INTO areas VALUES (?, ?, ?)'
   const id = getId()
-  const sql = 'INSERT INTO areas VALUES (?, ?)'
-  const values = [id, name]
+  const archived = 0
+  const values = [id, name, archived]
 
   try {
     await db.query(sql, values)
@@ -51,10 +52,11 @@ const updateArea = async (id: string, name: string, archived: number) => {
   }
 }
 
-const archiveArea = async (id: string, archive: number) => {
+const archiveArea = async (id: string) => {
   const db = await connection()
-  const sql = 'UPDATE areas SET archive = ? WHERE id = ?'
-  const values = [archive, id]
+  const sql = 'UPDATE areas SET archived = ? WHERE id = ?'
+  const archived = 1
+  const values = [archived, id]
 
   try {
     await db.query(sql, values)
