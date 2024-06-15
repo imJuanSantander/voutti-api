@@ -3,5 +3,6 @@ export const types = `
     id: String!
     name: String!
     id_area: String!
+    archived: Boolean
   }
 `

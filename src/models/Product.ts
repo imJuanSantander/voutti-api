@@ -29,9 +29,10 @@ const getProduct = async (id: string) => {
 
 const addProduct = async (name: string, price: number, temperature: string, description: string, id_category: number) => {
   const db = await connection()
-  const insertSql = 'INSERT INTO products (id, name, price, temperature, description, id_category) VALUES (?, ?, ?, ?, ?, ?)'
+  const insertSql = 'INSERT INTO products (id, name, price, temperature, description, id_category, archived) VALUES (?, ?, ?, ?, ?, ?, ?)'
   const id = getId()
-  const insertValues = [id, name, price, temperature, description, id_category]
+  const archived = 0
+  const insertValues = [id, name, price, temperature, description, id_category, archived]
   
   try {
     await db.query(insertSql, insertValues)
@@ -55,8 +56,9 @@ const updateProduct = async (id: string, name: string, price: number, temperatur
 
 const archiveProduct = async (id: string) => {
   const db = await connection()
-  const sql = 'UPDATE products SET archived = 1 WHERE id = ?' // Set archived from false to true in sql
-  const values = [id]
+  const sql = 'UPDATE products SET archived = ? WHERE id = ?' // Set archived from false to true in sql
+  const archived = 1
+  const values = [archived, id]
 
   try {
     await db.query(sql, values)
